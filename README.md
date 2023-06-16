@@ -1,6 +1,6 @@
-# SMTP ThingsDB Module (Go)
+# Twilio ThingsDB Module (Go)
 
-SMTP module written using the [Go language](https://golang.org).
+Twilio module written using the [Go language](https://golang.org).
 
 
 ## Installation
@@ -8,27 +8,27 @@ SMTP module written using the [Go language](https://golang.org).
 Install the module by running the following command in the `@thingsdb` scope:
 
 ```javascript
-new_module("smtp", "github.com/thingsdb/module-go-smtp");
+new_module("twilio", "github.com/thingsdb/module-go-twilio");
 ```
 
 Optionally, you can choose a specific version by adding a `@` followed with the release tag. For example: `@v0.1.0`.
 
 ## Configuration
 
-The smtp module requires configuration with the following properties:
+The Twilio module requires configuration with the following properties:
 
-Property | Type            | Description
--------- | --------------- | -----------
-host     | str (required)  | SMTP host, eg 'myhost.local:587'
-auth     | [str, str]      | Optional authentication. [Username, Password].
+Property             | Type            | Description
+-------------------- | --------------- | -----------
+`TWILIO_ACCOUNT_SID` | str (required)  | Find your Account SID at twilio.com/console.
+`TWILIO_AUTH_TOKEN`  | str (required)  | Find your Auth Token twilio.com/console.
 
 
 Example configuration:
 
 ```javascript
 set_module_conf("twilio", {
-    host: "myhost.local:587",
-    auth: ["myuser", "mypassword"],
+    TWILIO_ACCOUNT_SID: "REPLACE WITH ACCOUNT_SID",
+    TWILIO_AUTH_TOKEN: "REPLACE WITH AUTH_TOKEN",
 });
 ```
 
@@ -36,38 +36,30 @@ set_module_conf("twilio", {
 
 Name                            | Description
 ------------------------------- | -----------
-[send_mail](#send-mail)         | Send an email.
+[call](#voice-call)             | Make a Voice call.
 
-### Send mail
+### Voice call
 
-Syntax: `send_mail(to, mail)`
+Syntax: `call(params)`
 
 #### Arguments
 
-- `mail`: _(thing)_ Mail to send.
+- `params`: _(thing)_ Params to use for the voice call.
 
 #### Example:
 
 ```javascript
 // Only subject is required
-mail = {
-    bcc: ['charlie@foo.bar'],
-    cc: ['info@foo.bar'],
-    from: 'bob@foo.bar',
-    from_name: 'Bob',
-    html: '<html>Html Body</html>',
-    plain: 'plain text body',
-    reply_to: 'bob@foo.bar',
-    subject: 'my subject',
+params = {
+    body: 'Hello world!',
+    to: '+310612345678',
+    from: '+310687654321',
 };
 
-// At least one to address is required
-to = ['alice@foo.bar'];
-
-// Send the email
-smtp.send_mail(to, mail).else(|err| {
+// Make the call
+twilio.call(params).then(|resp| {
+    // you might want to do something with the response, for example resp.Sid.
+}).else(|err| {
     err;  // some error has occurred
-})
+});
 ```
-
-# module-go-twilio
