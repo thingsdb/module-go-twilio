@@ -1,14 +1,14 @@
 #!/bin/bash
 declare -a arr=(
-    "linux/386"
+    # "linux/386"
     "linux/amd64"
-    "linux/arm"
-    "linux/arm64"
-    "freebsd/386"
-    "freebsd/amd64"
-    "freebsd/arm"
-    "freebsd/arm64"
-    "darwin/amd64"
+    # "linux/arm"
+    # "linux/arm64"
+    # "freebsd/386"
+    # "freebsd/amd64"
+    # "freebsd/arm"
+    # "freebsd/arm64"
+    # "darwin/amd64"
 )
 
 if [ "$OUT" == "" ]
