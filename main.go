@@ -2,23 +2,23 @@
 //
 // For example:
 //
-//	// Create the module (@thingsdb scope)
-//	new_module('twilio', 'github.com/thingsdb/module-go-twilio');
+//		// Create the module (@thingsdb scope)
+//		new_module('twilio', 'github.com/thingsdb/module-go-twilio');
 //
-//	// Configure the module
-//  set_module_conf("twilio", {
-//      TWILIO_ACCOUNT_SID: "REPLACE WITH ACCOUNT_SID",
-//      TWILIO_AUTH_TOKEN: "REPLACE WITH AUTH_TOKEN",
-//  });
+//		// Configure the module
+//	  	set_module_conf("twilio", {
+//	        TWILIO_ACCOUNT_SID: "REPLACE WITH ACCOUNT_SID",
+//	        TWILIO_AUTH_TOKEN: "REPLACE WITH AUTH_TOKEN",
+//	  	});
 //
-//	// Use the module
-//	twilio.message( {
-//	    from: "bob@foo.bar",
-//	    subject: "my subject",
-//	    plain: "my body",
-//	}).else(|err| {
-//	    // error handling....
-//	}));
+//		// Use the module
+//		twilio.message( {
+//		    to: "+31 612345678",
+//		    from: "+31 687654321",
+//		    body: "sample SMS message",
+//		}).else(|err| {
+//		    // error handling....
+//		}));
 package main
 
 import (
