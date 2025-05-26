@@ -1,6 +1,6 @@
 {
     "doc": "https://github.com/thingsdb/module-go-twilio#readme",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "main": {
         "linux/386": "bin/twilio_linux_386.bin",
         "linux/amd64": "bin/twilio_linux_amd64.bin",
