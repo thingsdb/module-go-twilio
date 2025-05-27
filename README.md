@@ -105,7 +105,12 @@ Syntax: `message(params)`
 ```javascript
 // Only subject is required
 params = {
-    body: 'Hello world!',
+    sid: "HXXXXXXXXXXX",
+    variables: JSON.stringify({
+      1: "coupon_code",
+      2: "docs",
+      3: "images/library-logo-resource2x.width-1000.png",
+    }),
     to: 'whatsapp:+310612345678',
     from: 'whatsapp:+310687654321',
 };
