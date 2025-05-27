@@ -53,9 +53,11 @@ func handleConf(conf *confTwilio) error {
 }
 
 type twilioMessage struct {
-	Body string `msgpack:"body"`
-	To   string `msgpack:"to"`
-	From string `msgpack:"from"`
+	Body             string `msgpack:"body"`
+	To               string `msgpack:"to"`
+	From             string `msgpack:"from"`
+	ContentSid       string `msgpack:"sid"`
+	ContentVariables string `msgpack:"variables"`
 }
 
 type twilioCall struct {
@@ -126,11 +128,11 @@ func handleCall(pkg *timod.Pkg, call *twilioCall) {
 
 func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
 
-	if message.Body == "" {
+	if message.Body == "" && message.ContentSid == "" {
 		timod.WriteEx(
 			pkg.Pid,
 			timod.ExBadData,
-			"Error: Twilio message requires a non empty `body`")
+			"Error: Twilio message requires a non empty `body` or `sid`")
 		return
 	}
 
@@ -153,7 +155,13 @@ func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
 	client := twilio.NewRestClient()
 	params := &api.CreateMessageParams{}
 
-	params.SetBody(message.Body)
+	if message.Body != "" {
+		params.SetBody(message.Body)
+	}
+	if message.ContentSid != "" {
+		params.SetContentSid(message.ContentSid)
+		params.SetContentVariables(message.ContentVariables)
+	}
 	params.SetTo(message.To)
 	params.SetFrom(message.From)
 
