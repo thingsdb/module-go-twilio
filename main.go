@@ -128,7 +128,7 @@ func handleCall(pkg *timod.Pkg, call *twilioCall) {
 }
 
 func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
-	riskCheck := "enabled"
+	riskCheck := "enable"
 
 	if message.Body == "" && message.ContentSid == "" {
 		timod.WriteEx(
@@ -155,7 +155,7 @@ func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
 	}
 
 	if message.DisableRiskCheck {
-		riskCheck = "disabled"
+		riskCheck = "disable"
 	}
 
 	client := twilio.NewRestClient()
