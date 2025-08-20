@@ -58,6 +58,7 @@ type twilioMessage struct {
 	From             string `msgpack:"from"`
 	ContentSid       string `msgpack:"sid"`
 	ContentVariables string `msgpack:"variables"`
+	DisableRiskCheck bool   `msgpack:"disableRiskCheck"`
 }
 
 type twilioCall struct {
@@ -127,6 +128,7 @@ func handleCall(pkg *timod.Pkg, call *twilioCall) {
 }
 
 func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
+	riskCheck := "enabled"
 
 	if message.Body == "" && message.ContentSid == "" {
 		timod.WriteEx(
@@ -152,6 +154,10 @@ func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
 		return
 	}
 
+	if message.DisableRiskCheck {
+		riskCheck = "disabled"
+	}
+
 	client := twilio.NewRestClient()
 	params := &api.CreateMessageParams{}
 
@@ -164,6 +170,7 @@ func handleMessage(pkg *timod.Pkg, message *twilioMessage) {
 	}
 	params.SetTo(message.To)
 	params.SetFrom(message.From)
+	params.SetRiskCheck(riskCheck)
 
 	resp, err := client.Api.CreateMessage(params)
 	if err != nil {
